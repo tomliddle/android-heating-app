@@ -1,5 +1,6 @@
 package com.tomliddle.heating;
 
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,21 +10,14 @@ import android.webkit.WebView;
 
 public class MainActivity extends ActionBarActivity {
 
+	private WebView webView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 
-		private WebView webView;
-
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			setContentView(R.layout.webview);
-
-			webView = (WebView) findViewById(R.id.webView1);
-			webView.getSettings().setJavaScriptEnabled(true);
-			webView.loadUrl("http://www.google.com");
+		SSHConnect sshConnect = new SSHConnect();
+		sshConnect.execute();
 	}
 
 
@@ -47,5 +41,26 @@ public class MainActivity extends ActionBarActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private class SSHConnect extends AsyncTask<Void, Void, Long> {
+		protected Long doInBackground(Void... urls) {
+			SshPortForward sshPortForward = new SshPortForward(getApplicationContext());
+
+
+			return 1l;
+		}
+
+		protected void onProgressUpdate(Integer... progress) {
+			//setProgressPercent(progress[0]);
+		}
+
+		protected void onPostExecute(Long result) {
+			WebView webview = new WebView(getApplicationContext());
+			webview.getSettings().setJavaScriptEnabled(true);
+			webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
+			setContentView(webview);
+			webview.loadUrl("http://localhost:8080/heating");
+		}
 	}
 }
