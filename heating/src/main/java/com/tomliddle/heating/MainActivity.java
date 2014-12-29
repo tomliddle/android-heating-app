@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 
 
@@ -22,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		setContentView(webview);
 
@@ -52,8 +54,8 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private class SSHConnect extends AsyncTask<Integer, Void, Void> {
-		protected Void doInBackground(Integer... x) {
+	private class SSHConnect extends AsyncTask<Integer, Void, Long> {
+		protected Long doInBackground(Integer... x) {
 			if (sshPortForward == null) {
 				sshPortForward = new SshPortForward(getApplicationContext());
 			}
@@ -61,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
 				sshPortForward.ensureConnected();
 			}
 
-			return null;
+			return 1l;
 		}
 
 		protected void onProgressUpdate(Integer... progress) {
