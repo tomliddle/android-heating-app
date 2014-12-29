@@ -43,12 +43,11 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private class SSHConnect extends AsyncTask<Void, Void, Long> {
-		protected Long doInBackground(Void... urls) {
+	private class SSHConnect extends AsyncTask<Integer, Void, Void> {
+		protected Void doInBackground(Integer... x) {
 			SshPortForward sshPortForward = new SshPortForward(getApplicationContext());
 
-
-			return 1l;
+			return null;
 		}
 
 		protected void onProgressUpdate(Integer... progress) {
