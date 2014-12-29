@@ -5,16 +5,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.webkit.WebView;
 
 
 public class MainActivity extends ActionBarActivity {
 
-	private WebView webView;
+	private WebView webview;
+	private SshPortForward sshPortForward;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		webview  = new WebView(getApplicationContext());
+		webview.getSettings().setJavaScriptEnabled(true);
+		webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+		setContentView(webview);
 
 		SSHConnect sshConnect = new SSHConnect();
 		sshConnect.execute();
@@ -45,7 +54,12 @@ public class MainActivity extends ActionBarActivity {
 
 	private class SSHConnect extends AsyncTask<Integer, Void, Void> {
 		protected Void doInBackground(Integer... x) {
-			SshPortForward sshPortForward = new SshPortForward(getApplicationContext());
+			if (sshPortForward == null) {
+				sshPortForward = new SshPortForward(getApplicationContext());
+			}
+			else {
+				sshPortForward.ensureConnected();
+			}
 
 			return null;
 		}
@@ -55,10 +69,6 @@ public class MainActivity extends ActionBarActivity {
 		}
 
 		protected void onPostExecute(Long result) {
-			WebView webview = new WebView(getApplicationContext());
-			webview.getSettings().setJavaScriptEnabled(true);
-			webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
-			setContentView(webview);
 			webview.loadUrl("http://localhost:8080/heating");
 		}
 	}

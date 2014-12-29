@@ -13,18 +13,20 @@ import java.nio.charset.Charset;
 public class SshPortForward {
 
 
-	JSch jsch=new JSch();
+	private JSch jsch=new JSch();
+	private Session session = null;
 
 	public SshPortForward(Context context) {
+		InputStream privateStream = null;
+		InputStream publicStream = null;
 
 		try {
-			final Session session = jsch.getSession("tom", "tomliddle.asuscomm.com", 40);
-			int assinged_port = session.setPortForwardingL(8080, "localhost", 8080);
+			session = jsch.getSession("tom", "tomliddle.asuscomm.com", 40);
+			session.setPortForwardingL(8080, "localhost", 8080);
 			session.setConfig("StrictHostKeyChecking","no");
 
-
-			InputStream privateStream = context.getResources().openRawResource(R.raw.id_rsa);
-			InputStream publicStream = context.getResources().openRawResource(R.raw.id_rsa_pub);
+			privateStream = context.getResources().openRawResource(R.raw.id_rsa);
+			publicStream = context.getResources().openRawResource(R.raw.id_rsa_pub);
 
 			byte[] privateKey = IOUtils.toByteArray(privateStream);
 			byte[] publicKey = IOUtils.toByteArray(publicStream);
@@ -34,6 +36,25 @@ public class SshPortForward {
 		}
 		catch (Exception e) {
 			int i = 0;
+		}
+		finally {
+			IOUtils.closeQuietly(publicStream);
+			IOUtils.closeQuietly(privateStream);
+		}
+	}
+
+	public void ensureConnected() {
+		if (session != null && !session.isConnected()) {
+			try {
+				session.connect();
+			}
+			catch (Exception e) {}
+		}
+	}
+
+	public void disconnect() {
+		if (session != null) {
+			session.disconnect();
 		}
 	}
 
