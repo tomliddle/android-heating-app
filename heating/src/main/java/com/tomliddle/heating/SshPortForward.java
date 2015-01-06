@@ -22,6 +22,8 @@ public class SshPortForward {
 
 		try {
 			session = jsch.getSession("tom", "tomliddle.asuscomm.com", 40);
+			session.setTimeout(30000)
+			//session.setServerAliveInterval(30000)
 			session.setPortForwardingL(8080, "localhost", 8080);
 			session.setConfig("StrictHostKeyChecking","no");
 
