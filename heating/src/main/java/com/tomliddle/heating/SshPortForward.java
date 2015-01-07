@@ -57,6 +57,7 @@ public class SshPortForward {
 	public void disconnect() {
 		if (session != null) {
 			session.disconnect();
+			session = null;
 		}
 	}
 

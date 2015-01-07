@@ -21,7 +21,6 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-
 		webview  = new WebView(getApplicationContext());
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
@@ -33,6 +32,30 @@ public class MainActivity extends ActionBarActivity {
 
 		SSHConnect sshConnect = new SSHConnect();
 		sshConnect.execute();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		close();
+	}
+
+	public void onPause() {
+		super.onPause();
+		close();
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		close();
+	}
+
+	private void close() {
+		if (sshPortForward != null) {
+			sshPortForward.disconnect();
+			sshPortForward = null;
+		}
 	}
 
 
