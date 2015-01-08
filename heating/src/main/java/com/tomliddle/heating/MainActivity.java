@@ -24,8 +24,6 @@ public class MainActivity extends ActionBarActivity {
 		webview  = new WebView(getApplicationContext());
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
-		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		webview.setWebViewClient(new WebViewClient());
 		webview.setWebChromeClient(new MyWebChromeClient(this));
 		setContentView(webview);
@@ -37,17 +35,6 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		close();
-	}
-
-	public void onPause() {
-		super.onPause();
-		close();
-	}
-
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
 		close();
 	}
 

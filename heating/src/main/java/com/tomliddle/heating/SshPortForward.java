@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 /**
- * Created by tom on 26/12/2014.
+ * Sets up port forwarding to the thermometer machine.
  */
 public class SshPortForward {
 
@@ -23,7 +23,6 @@ public class SshPortForward {
 		try {
 			session = jsch.getSession("tom", "tomliddle.asuscomm.com", 40);
 			session.setTimeout(30000);
-			//session.setServerAliveInterval(30000)
 			session.setPortForwardingL(8080, "localhost", 8080);
 			session.setConfig("StrictHostKeyChecking","no");
 
@@ -32,7 +31,7 @@ public class SshPortForward {
 
 			byte[] privateKey = IOUtils.toByteArray(privateStream);
 			byte[] publicKey = IOUtils.toByteArray(publicStream);
-			jsch.addIdentity("rpi2", privateKey, publicKey, "Atwood1234".getBytes(Charset.defaultCharset()));
+			jsch.addIdentity("rpi2", privateKey, publicKey, "password".getBytes(Charset.defaultCharset()));
 			session.connect();
 
 		}

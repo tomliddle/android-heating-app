@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/Users/tom/Development/android-sdk-macosx/platform-tools/adb -d install /Users/tom/Projects/AndroidHeating/heating/heating-release.apk
+~/Projects/AndroidHeating/android-sdk-macosx/platform-tools/adb -d install ~/Projects/AndroidHeating/heating/heating-release.apk
