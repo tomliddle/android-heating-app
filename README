@@ -4,7 +4,12 @@ This requires a number of other libraries and steps in order to work.
 
 1. usb-thermometer (https://github.com/tomliddle/usb-thermometer) installed on a raspberry pi
 2. TEMPer1F plugged in to raspberry pi
-3. raspberrypi-heating-api installed and running on raspberry pi
+3. android-heating-app-api installed and running on raspberry pi
 4. Replay switch installed using I2C on raspberry pi (http://www.byvac.com/bv3/index.php?route=product/product&product_id=103)
+5. Relay switches connected to heating demand circuit on central heating.
+6. Ssh installed on raspberrypi & public private keys generated.
+7. Static ip or forwarding service.
 
 
+Currently Ssh connection vars are stored in the code in SshPortForward. Edit username, password, hostname and ssh port
+for your network.

@@ -11,7 +11,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-
+/**
+ * Handles SSH connection and port forwarding.
+ */
 public class MainActivity extends ActionBarActivity {
 
 	private WebView webview;
@@ -21,6 +23,8 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// To view the controls we connect to the html page served by heating server.
+		// This avoids having to modify two sets of controls.
 		webview  = new WebView(getApplicationContext());
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.getSettings().setAllowUniversalAccessFromFileURLs(true);
@@ -78,10 +82,6 @@ public class MainActivity extends ActionBarActivity {
 			}
 
 			return 1l;
-		}
-
-		protected void onProgressUpdate(Integer... progress) {
-			//setProgressPercent(progress[0]);
 		}
 
 		protected void onPostExecute(Long result) {

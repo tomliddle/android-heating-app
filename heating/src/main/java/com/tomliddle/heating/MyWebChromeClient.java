@@ -8,7 +8,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 /**
- * Created by tom on 30/12/2014.
+ * Extended WebChromeClient to allow javascript confirmation dialogue to work in the webview.
  */
 final class MyWebChromeClient extends WebChromeClient {
 
@@ -37,9 +37,7 @@ final class MyWebChromeClient extends WebChromeClient {
 			dlg.create();
 			dlg.show();
 		}
-		catch (Exception e) {
-			int i = 0;
-		}
+		catch (Exception e) {}
 		return true;
 	}
 }

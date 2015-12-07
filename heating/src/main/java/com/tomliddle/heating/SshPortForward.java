@@ -16,28 +16,36 @@ public class SshPortForward {
 	private JSch jsch=new JSch();
 	private Session session = null;
 
+	private static final String PASSWORD = "password";
+	private static final String HOSTNAME = "hostname";
+	private static final String USERNAME = "username";
+	private static final String SSH_PORT = 22;
+
+	private static final String HTTP_REMOTE_PORT = 8080;
+	private static final String PUBLIC_KEY_IDENTITY = "rpi";
+
 	public SshPortForward(Context context) {
 		InputStream privateStream = null;
 		InputStream publicStream = null;
 
 		try {
-			session = jsch.getSession("tom", "tomliddle.asuscomm.com", 40);
+			session = jsch.getSession(USERNAME, HOSTNAME, SSH_PORT);
 			session.setTimeout(30000);
-			session.setPortForwardingL(8080, "localhost", 8080);
+			session.setPortForwardingL(8080, "localhost", HTTP_REMOTE_PORT);
 			session.setConfig("StrictHostKeyChecking","no");
 
+			// These resources need to be added.
+			// TODO these should be stored in the Android Keystore
 			privateStream = context.getResources().openRawResource(R.raw.id_rsa);
 			publicStream = context.getResources().openRawResource(R.raw.id_rsa_pub);
 
 			byte[] privateKey = IOUtils.toByteArray(privateStream);
 			byte[] publicKey = IOUtils.toByteArray(publicStream);
-			jsch.addIdentity("rpi2", privateKey, publicKey, "password".getBytes(Charset.defaultCharset()));
+			jsch.addIdentity(PUBLIC_KEY_IDENTITY, privateKey, publicKey, PASSWORD.getBytes(Charset.defaultCharset()));
 			session.connect();
 
 		}
-		catch (Exception e) {
-			int i = 0;
-		}
+		catch (Exception e) {}
 		finally {
 			IOUtils.closeQuietly(publicStream);
 			IOUtils.closeQuietly(privateStream);
@@ -59,8 +67,5 @@ public class SshPortForward {
 			session = null;
 		}
 	}
-
-
-
 
 }
