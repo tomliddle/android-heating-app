@@ -1,5 +1,9 @@
 Android heating control app
 
+Note this project is working but requires a bit of work including adding test cases, adding options so the ssh parameters are not hard coded etc. 
+
+Despite this, what the code actually does is quite simple as ultimately all it does is connect to a machine via ssh, forward a port and then open a webview.
+
 This requires a number of other libraries and steps in order to work.
 
 1. usb-thermometer (https://github.com/tomliddle/usb-thermometer) installed on a raspberry pi
