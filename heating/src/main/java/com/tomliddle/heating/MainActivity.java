@@ -81,11 +81,11 @@ public class MainActivity extends ActionBarActivity {
 				sshPortForward.ensureConnected();
 			}
 
-			return 1l;
+			return 0l;
 		}
 
 		protected void onPostExecute(Long result) {
-			webview.loadUrl("http://localhost:8080/heating");
+			webview.loadUrl("http://localhost:8080");
 		}
 	}
 }
